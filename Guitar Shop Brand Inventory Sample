@@ -1,4 +1,7 @@
+---Create a basic Guitar Shop Inventory
+
 CREATE TABLE guitar_shop_inventory (id INTEGER PRIMARY KEY, brand TEXT, quantity INTEGER);
+
 INSERT INTO guitar_shop_inventory VALUES (1, "Fender", 27);
 INSERT INTO guitar_shop_inventory VALUES (2, "Gibson", 14);
 INSERT INTO guitar_shop_inventory VALUES (3, "Ibanez", 33);
@@ -8,6 +11,10 @@ INSERT INTO guitar_shop_inventory VALUES (6, "Yamaha", 23);
 INSERT INTO guitar_shop_inventory VALUES (7, "Washburn", 2);
 INSERT INTO guitar_shop_inventory VALUES (8, "Gretsch", 1);
 
-SELECT * FROM guitar_shop_inventory;
+---display the database ordered by brand
+SELECT * FROM guitar_shop_inventory
+ORDER BY brand;
+
+--how many guitars are in stock?
 SELECT SUM(quantity) FROM guitar_shop_inventory;
-SELECT * FROM guitar_shop_inventory ORDER BY quantity;
+
