@@ -76,9 +76,18 @@ SELECT Loser, MAX(Loser_pts),Winner, Winner_Pts, Date, SB FROM superbowls;
 SELECT Loser, MIN(Loser_pts), Winner, Winner_Pts, Date, SB FROM superbowls;
 
 SELECT Winner, Winner_Pts, Loser_Pts, Loser, Date, SB FROM superbowls WHERE Winner_Pts - Loser_Pts > 30;
-SELECT Winner, Winner_Pts, Loser_Pts, Loser, Date, SB FROM superbowls WHERE Winner_Pts - Loser_Pts > 20;
+SELECT Winner, Winner_Pts, Loser_Pts, Loser, Date, SB FROM superbowls WHERE Winner_Pts - Loser_Pts > 21;
 SELECT Winner, Winner_Pts, Loser_Pts, Loser, Date, SB FROM superbowls WHERE Winner_Pts - Loser_Pts >= 10;
 SELECT Winner, Winner_Pts, Loser_Pts, Loser, Date, SB FROM superbowls WHERE Winner_Pts - Loser_Pts <= 3;
+
+SELECT Winner, Loser, SB, 
+CASE 
+WHEN winner_pts - loser_pts >= 21 THEN "blowout"
+WHEN winner_pts - loser_pts <= 7 THEN "great game"
+WHEN winner_pts - loser_pts <= 3 THEN "nail biter"
+ELSE "good game"
+END
+FROM superbowls;
 
 SELECT Winner,COUNT(Winner) AS "Total Sueprbowl Wins" FROM superbowls GROUP BY winner ORDER BY COUNT(Winner) DESC;
 
@@ -86,10 +95,4 @@ SELECT MVP, Date, SB FROM superbowls;
 SELECT COUNT(MVP) AS "Most SuperBowl MVPs" FROM superbowls WHERE MVP = "Tom Brady";
 SELECT MVP, Date, SB FROM superbowls WHERE MVP = "Tom Brady";
 
-
-
-
-
-
-
-
+SELECT Loser AS "Brady's Victims", SB, Date FROM superbowls WHERE MVP = "Tom Brady" OR Winner = "New England Patriots" AND Date > 2000;
