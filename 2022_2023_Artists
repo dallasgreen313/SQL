@@ -1,0 +1,53 @@
+CREATE TABLE artists (id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    genre TEXT,
+    origin TEXT,
+    spotify_listeners INTEGER);
+    
+    
+    INSERT INTO artists (name, genre, origin, spotify_listeners) VALUES ("Rainbow Kitten Surprise" , "Indie Rock" , "North Carolina", 3717720);
+    INSERT INTO artists (name, genre, origin, spotify_listeners) VALUES ("Greta Van Fleet", "Rock", "Michigan", 3397829);
+    INSERT INTO artists (name, genre, origin, spotify_listeners) VALUES ("Noah Kahan", "Indie Rock", "Vermont" , 8388821);
+    INSERT INTO artists (name, genre, origin, spotify_listeners) VALUES ("Lawrence", "Pop", "New York", 1438162);
+    INSERT INTO artists (name, genre, origin, spotify_listeners) VALUES ("Hozier", "Rock", "Ireland", 21141508);
+    INSERT INTO artists (name, genre, origin, spotify_listeners) VALUES ("Nic D", "Pop", "Virginia", 4342256);
+    INSERT INTO artists (name, genre, origin, spotify_listeners) VALUES ("The Lumineers", "Indie/Alternative", "Colorado", 16217448);
+    INSERT INTO artists (name, genre, origin, spotify_listeners) VALUES ("Nahko and Medicine for the People", "Indie Alternative", "Oregon", 286199);
+    INSERT INTO artists (name, genre, origin, spotify_listeners) VALUES ("Wookiefoot", "Indie/Alternative", "Minnesota", 73050);
+    INSERT INTO artists (name, genre, origin, spotify_listeners) VALUES ("City and Colour", "Rock", "Canada", 1172290);
+    INSERT INTO artists (name, genre, origin, spotify_listeners) VALUES ("Tyler Childers", "Country", "Kentucky", 6170148);
+    INSERT INTO artists (name, genre, origin, spotify_listeners) VALUES ("Houndmouth", "Indie/Alternative", "Indiana", 1882105);
+    SELECT name, genre, origin, spotify_listeners
+    FROM artists;
+    
+    
+
+
+
+CREATE TABLE "concerts" (id INTEGER PRIMARY KEY AUTOINCREMENT,
+band_id INTEGER,
+Tulsa_2022 TEXT,
+Tulsa_2023 TEXT,
+nearby_2023 TEXT,
+ticket_prices INTEGER);
+
+INSERT INTO concerts (band_id, Tulsa_2022, Tulsa_2023, nearby_2023, ticket_prices) VALUES (1, "yes", "TBD", "TBD", "TBD");
+INSERT INTO concerts (band_id, Tulsa_2022, Tulsa_2023, nearby_2023, ticket_prices) VALUES (2, "no", "TBD", "TBD", "TBD");
+INSERT INTO concerts (band_id, Tulsa_2022, Tulsa_2023, nearby_2023, ticket_prices) VALUES (3, "no", "no", "yes (Dallas, TX)", 150-1206);
+INSERT INTO concerts (band_id, Tulsa_2022, Tulsa_2023, nearby_2023, ticket_prices) VALUES (4, "no", "no", "yes (New Orleans, LA)", 75);
+INSERT INTO concerts (band_id, Tulsa_2022, Tulsa_2023, nearby_2023, ticket_prices) VALUES (5, "no", "no", "yes (Atlanta,GA)", 215);
+INSERT INTO concerts (band_id, Tulsa_2022, Tulsa_2023, nearby_2023, ticket_prices) VALUES (6, "no", "TBD", "TBD", "TBD");
+INSERT INTO concerts (band_id, Tulsa_2022, Tulsa_2023, nearby_2023, ticket_prices) VALUES (7, "yes", "TBD", "TBD", "TBD"); 
+INSERT INTO concerts (band_id, Tulsa_2022, Tulsa_2023, nearby_2023, ticket_prices) VALUES (8, "no", "TBD", "TBD", "TBD");
+INSERT INTO concerts (band_id, Tulsa_2022, Tulsa_2023, nearby_2023, ticket_prices) VALUES (9, "no", "no", "no", null);
+INSERT INTO concerts (band_id, Tulsa_2022, Tulsa_2023, nearby_2023, ticket_prices) VALUES(10, "no", "no", "no", null);
+INSERT INTO concerts (band_id, Tulsa_2022, Tulsa_2023, nearby_2023, ticket_prices) VALUES (11, "yes", "no", "yes (Rogers, AR)", "sold out");
+INSERT INTO concerts (band_id, Tulsa_2022, Tulsa_2023, nearby_2023, ticket_prices) VALUES (12, "no", "TBD", "TBD", "TBD");
+
+
+SELECT artists.name, tulsa_2022, Tulsa_2023, nearby_2023, ticket_prices FROM concerts
+JOIN artists ON concerts.band_id = artists.id
+WHERE concerts.tulsa_2022 = "yes" OR nearby_2023 LIKE "%yes%";
+
+
+
