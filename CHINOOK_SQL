@@ -1,0 +1,82 @@
+--To provide the following information I am working with a dataset called chinook, which represents a digital media store 
+--and includes multiple tables for artists, albums, media tracks, invoices, customers, etc.
+
+--1. What was the total revenue of the company in the United States? 
+
+SELECT SUM(UnitPrice*quantity) FROM chinook.invoice_items
+INNER JOIN chinook.invoices
+ON invoices.invoiceid = invoice_items.invoiceid
+WHERE invoices.billingcountry = "USA";
+
+--2. Outside the United States?
+
+SELECT SUM(UnitPrice*quantity) FROM chinook.invoice_items
+INNER JOIN chinook.invoices
+ON invoices.invoiceid = invoice_items.invoiceid
+WHERE invoices.billingcountry <> "USA"
+
+--3. Present a list of all customers in the United States (Group by state of listed billing address).
+
+SELECT i.customerid, c.Lastname, c.Firstname, i.Billingstate as "state" FROM chinook.customers c
+JOIN chinook.invoices i
+ON c.customerid=i.customerid 
+WHERE i.billingcountry = "USA"
+GROUP BY i.Billingstate;
+
+--4. Present Customers who are not in the US (Group by country of their listed billing address).
+
+SELECT i.customerid, c.Lastname, c.Firstname, i.BillingCountry FROM chinook.customers c
+JOIN chinook.invoices i
+ON c.customerid=i.customerid 
+WHERE i.billingcountry <> "USA"
+GROUP BY i.Billingcountry;
+
+--5. Show all the countries and how many tracks were purchased in each this year.
+
+SELECT i.billingcountry, SUM(ii.quantity) FROM invoices i
+JOIN invoice_items ii
+ON i.invoiceid = ii.invoiceid
+GROUP BY i.billingcountry
+ORDER BY SUM(ii.quantity) DESC;
+
+--6. Write a query that includes the purchased track name with each invoice line ID.
+
+SELECT t.name, ii.invoicelineid FROM tracks t
+JOIN invoice_items ii
+ON t.trackid = ii.TrackId
+JOIN invoices i
+ON i.invoiceid=ii.invoiceid;
+
+
+--7. Present all the Tracks, and include the Album name, Media type, and Genre.
+
+SELECT t.name AS "Track" ,a.title AS "Album" ,m.name AS "Media Type",g.name AS "Genre" FROM tracks t
+JOIN albums a
+ON a.albumid=t.albumid
+JOIN genres g
+ON g.genreid=t.GenreId
+JOIN media_types m
+ON m.mediatypeid = t.mediatypeid;
+
+
+--8. Show the Employees who are Sales Agents.
+
+SELECT EmployeeId, Lastname, Firstname, Title FROM chinook.employees
+WHERE title LIKE "%SALES%";
+
+
+--9. Show the total sales made by each sales agent.
+
+SELECT e.EmployeeID, e.Lastname, e.Firstname, COUNT(c.customerid) FROM employees e
+JOIN customers c
+ON c.supportrepid=e.EmployeeId
+GROUP BY e.employeeID
+
+--10. Who was the top selling Sales Agent this year?
+
+SELECT e.EmployeeID, e.Lastname, e.Firstname, SUM(i.total) FROM employees e
+JOIN customers c
+ON c.supportrepid=e.EmployeeId
+JOIN invoices i
+ON i.customerid=c.CustomerId
+
