@@ -1,0 +1,65 @@
+--For this project I created a new table into an already existing database in order to perform analytics on the data using SQL.
+
+CREATE TABLE BIT_DB.Spotifydata 
+(id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL)
+
+--Here, in order to fill this table with the necesary data, I imported the Spotify Data .csv into the table.
+
+SELECt * FROM spotifydata;
+
+--1.What were the most popular (top 10) songs on Spotify in 2021?
+
+SELECT track_name, artist_name FROM spotifydata 
+ORDER BY popularity DESC 
+LIMIT 10;
+
+
+--2. According to our database, what were the most energetic songs in 2021?
+
+SELECT track_name, artist_name FROM spotifydata
+ORDER BY energy DESC
+LIMIT 10;
+
+
+--3. What was the longest popular listen on Spotify in 2021
+
+SELECT track_name, artist_name, duration_ms FROM spotifydata
+ORDER BY duration_ms DESC
+LIMIT 1;
+
+
+--4.Here I list the average popularity, danceability, and energy by artist and track.
+
+SELECT artist_name ,track_name ,avg(popularity) ,avg(danceability) ,avg(energy)
+FROM BIT_DB.spotifydata
+GROUP BY artist_name, track_name
+
+--5.Calculate the average popularity for the artists in the Spotify data table. Then, for every artist 
+--with an average popularity of 90 or above, show their name, their average popularity, 
+--and label them as a “Top Star”.
+
+WITH popularity_average_CTE AS 
+(SELECT spotifydata.artist_name, AVG(spotifydata.popularity) AS average_popularity
+FROM Spotifydata 
+GROUP BY spotifydata.artist_name)
+SELECT artist_name, average_popularity, 
+'Top Star' AS tag
+FROM popularity_average_CTE
+WHERE average_popularity>=90;
